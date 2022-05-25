@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Controller
@@ -22,7 +23,8 @@ public class catalog {
 
   // 一覧表示
   @GetMapping("/catalog")
-  public String catalogForSeeing(Model model) {
+  public String catalogForSeeing(@ModelAttribute Catalog catalog,
+      Model model) {
     model.addAttribute("name", catalogRepository.findAll());
     // System.out.println(catalogRepository.findAll().get(0));
     return "catalog";
@@ -41,6 +43,19 @@ public class catalog {
       return "catalog-create";
     }
     System.out.println(catalog);
+    catalogRepository.save(catalog);
+    return "redirect:/catalog";
+  }
+
+  // 更新処理
+  @PostMapping("/catalog/catalog-update")
+  public String catalogUpdate(@Validated @ModelAttribute Catalog catalog,
+      BindingResult result,
+      Model model) {
+    if (result.hasErrors()) {
+      model.addAttribute("name", catalogRepository.findAll());
+      return "catalog";
+    }
     catalogRepository.save(catalog);
     return "redirect:/catalog";
   }

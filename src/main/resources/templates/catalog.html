@@ -8,8 +8,14 @@
 </head>
 <body>
   <a th:href="@{/catalog/catalog-create}">作成</a>
+  <span th:errors="${catalog.name}"></span>
   <div th:each="name : ${name}">
     <span th:text="${name.name}"></span>
+    <form th:action="@{/catalog/catalog-update}" method="post">
+      <input name="name" type="text">
+      <input type="hidden" name="id" th:value="${name.id}">
+      <input type="submit" value="更新">
+    </form>
     <form th:action="@{/catalog/catalog-delete}" method="post">
       <button type="submit">削除</button>
       <input type="hidden" name="id" th:value="${name.id}">
