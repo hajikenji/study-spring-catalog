@@ -1,6 +1,8 @@
 package com.example.study.controller;
 
-import com.example.study.model.catalogForm;
+import com.example.study.form.catalogForm;
+import com.example.study.model.Catalog;
+import com.example.study.repository.CatalogRepository;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class catalog {
+
+  final CatalogRepository catalogRepository;
 
   @GetMapping("/catalog")
   public String catalogForSeeing() {
@@ -18,17 +25,18 @@ public class catalog {
   }
 
   @GetMapping("/catalog/catalog-create")
-  public String catalogCreatePage(@ModelAttribute catalogForm catalog) {
+  public String catalogCreatePage(@ModelAttribute Catalog catalog) {
     return "catalog-create";
   }
 
   @PostMapping("/catalog/catalog-create")
-  public String catalogCreating(@Validated @ModelAttribute catalogForm catalog,
+  public String catalogCreating(@Validated @ModelAttribute Catalog catalog,
       BindingResult result) {
     if (result.hasErrors()) {
       return "catalog-create";
     }
-    System.out.println(catalog.getName());
+    System.out.println(catalog);
+    catalogRepository.save(catalog);
     return "redirect:/catalog";
   }
 }

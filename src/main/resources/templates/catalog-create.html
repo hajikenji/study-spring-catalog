@@ -8,7 +8,7 @@
 </head>
 <body>
   b
-  <form th:action="@{/catalog/catalog-create}" method="post" th:object="${catalogForm}">
+  <form th:action="@{/catalog/catalog-create}" method="post" th:object="${catalog}">
     <span th:errors="*{name}"></span>
     <br>
     <input name="name" type="text" />

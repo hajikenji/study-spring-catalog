@@ -1,4 +1,4 @@
-package com.example.study.model;
+package com.example.study.form;
 
 import javax.validation.constraints.Size;
 
