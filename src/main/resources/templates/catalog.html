@@ -9,7 +9,11 @@
 <body>
   <a th:href="@{/catalog/catalog-create}">作成</a>
   <div th:each="name : ${name}">
-    <span th:text="${name.getName()}"></span>
+    <span th:text="${name.name}"></span>
+    <form th:action="@{/catalog/catalog-delete}" method="post">
+      <button type="submit">削除</button>
+      <input type="hidden" name="id" th:value="${name.id}">
+    </form>
   </div>
 </body>
 </html>

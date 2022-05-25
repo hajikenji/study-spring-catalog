@@ -1,6 +1,5 @@
 package com.example.study.controller;
 
-import com.example.study.form.catalogForm;
 import com.example.study.model.Catalog;
 import com.example.study.repository.CatalogRepository;
 
@@ -11,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +20,7 @@ public class catalog {
 
   final CatalogRepository catalogRepository;
 
+  // 一覧表示
   @GetMapping("/catalog")
   public String catalogForSeeing(Model model) {
     model.addAttribute("name", catalogRepository.findAll());
@@ -27,6 +28,7 @@ public class catalog {
     return "catalog";
   }
 
+  // 作成画面に遷移&作成処理
   @GetMapping("/catalog/catalog-create")
   public String catalogCreatePage(@ModelAttribute Catalog catalog) {
     return "catalog-create";
@@ -40,6 +42,13 @@ public class catalog {
     }
     System.out.println(catalog);
     catalogRepository.save(catalog);
+    return "redirect:/catalog";
+  }
+
+  // 削除処理
+  @PostMapping("/catalog/catalog-delete")
+  public String catalogDelete(@RequestParam("id") long id) {
+    catalogRepository.deleteById(id);
     return "redirect:/catalog";
   }
 }
