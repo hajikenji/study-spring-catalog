@@ -7,8 +7,12 @@
   <title>Document</title>
 </head>
 <body>
-  ようこそ
-  <br>
-  <a th:href="@{/catalog}">一覧</a>
+  b
+  <form th:action="@{/catalog/catalog-create}" method="post" th:object="${catalog}">
+    <span th:errors="*{name}"></span>
+    <br>
+    <input name="name" type="text" />
+    <input type="submit" value="登録">
+  </form>
 </body>
 </html>
