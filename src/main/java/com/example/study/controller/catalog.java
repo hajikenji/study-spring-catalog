@@ -5,6 +5,7 @@ import com.example.study.model.Catalog;
 import com.example.study.repository.CatalogRepository;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,9 @@ public class catalog {
   final CatalogRepository catalogRepository;
 
   @GetMapping("/catalog")
-  public String catalogForSeeing() {
+  public String catalogForSeeing(Model model) {
+    model.addAttribute("name", catalogRepository.findAll());
+    // System.out.println(catalogRepository.findAll().get(0));
     return "catalog";
   }
 

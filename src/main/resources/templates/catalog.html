@@ -8,5 +8,8 @@
 </head>
 <body>
   <a th:href="@{/catalog/catalog-create}">作成</a>
+  <div th:each="name : ${name}">
+    <span th:text="${name.getName()}"></span>
+  </div>
 </body>
 </html>
