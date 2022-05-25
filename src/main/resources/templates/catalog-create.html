@@ -9,13 +9,6 @@
 <body>
   b
   <form th:action="@{/catalog/catalog-create}" method="post" th:object="${catalogForm}">
-    <!-- <div th:if="*{name}">
-      <span th:errors="*{name}"></span>
-    </div> -->
-    <!-- <span th:text="*{name}"></span> -->
-    <!-- <div th:if="*{name != null}">
-      <span th:errors="*{name}"></span>
-    </div> -->
     <span th:errors="*{name}"></span>
     <br>
     <input name="name" type="text" />
