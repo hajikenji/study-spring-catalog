@@ -41,7 +41,12 @@ public class catalog {
     if (result.hasErrors()) {
       return "catalog-create";
     }
-    System.out.println(catalog);
+    // System.out.println(catalog);
+    // try {
+    // catalog.setName("a");
+    // } catch (Exception e) {
+    // System.out.println(e);
+    // }
     catalogRepository.save(catalog);
     return "redirect:/catalog";
   }
