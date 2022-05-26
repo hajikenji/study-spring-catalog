@@ -108,12 +108,18 @@ public class modelTest {
   @DisplayName("バリデーションテスト 条件:2~30字 通る")
   void validationTestCicle() {
     Random random = new Random();
+    // for で100回
     for (int i = 0; i < 100; i++) {
+      // 2~30までの数字でランダムな数字を作成
       int randomNum = random.nextInt(2, 30);
+      // ランダムな数字の長さの文字列作成
       String testCase = RandomString.make(randomNum);
+      // modelにセット
       catalog.setName(testCase);
       var catalogList = new ArrayList<>();
+      // バリデーションに引っかかるとエラーメッセージが出るので、リストに入れる
       validator.validate(catalog).forEach(x -> catalogList.add(x));
+      // この後get(0)するので、リストの長さが0だとエラーのため"a"だけ入れとく
       catalogList.add("a");
       assertTrue(!catalogList.get(0).toString().contains("2 から 30 の間のサイズにしてください"));
       System.out.println(i);
