@@ -7,6 +7,7 @@
   <title>Document</title>
 </head>
 <body>
+  <p>一覧画面</p>
   <a th:href="@{/catalog/catalog-create}">作成</a>
   <span th:errors="${catalog.name}"></span>
   <div th:each="name : ${name}">
