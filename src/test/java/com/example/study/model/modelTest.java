@@ -122,20 +122,45 @@ public class modelTest {
       // この後get(0)するので、リストの長さが0だとエラーのため"a"だけ入れとく
       catalogList.add("a");
       assertTrue(!catalogList.get(0).toString().contains("2 から 30 の間のサイズにしてください"));
-      System.out.println(i);
     }
 
   }
 
-  // public static Stream<String> source() {
-  // ArrayList<String> stringArrayList = new ArrayList<>();
-  // for (Integer i = 0; i < 10; i++) {
-  // stringArrayList.add(i.toString());
-  // }
-  // String[] stringArray = stringArrayList.toArray(new String[0]);
-  // // this.stringArrayList = stringArrayList;
-  // System.out.println(stringArray.toString());
-  // return Stream.of(stringArrayList);
-  // }
+  @Test
+  @DisplayName("データの削除ができる")
+  void registerDelete() {
+    catalog.setName("name");
+    catalogRepository.save(catalog);
+    catalogRepository.deleteById(catalog.getId());
+    assertTrue(catalogRepository.findAll().size() == 0);
+  }
+
+  @Test
+  @DisplayName("データの更新ができる")
+  void registerUpdate() {
+    catalog.setName("name");
+    catalogRepository.save(catalog);
+    Catalog catalog2 = new Catalog();
+    catalog2.setId(catalog.getId());
+    catalog2.setName("name1");
+    catalogRepository.save(catalog2);
+    var outPut = catalogRepository.getReferenceById(catalog2.getId());
+    assertEquals(catalog2.getName(), outPut.getName());
+    assertTrue(catalogRepository.findAll().size() == 1);
+  }
+
+  @Test
+  @DisplayName("データの更新がバリデーションによってちゃんとできない")
+  void registerUpdateValidation() {
+    catalog.setName("name");
+    catalogRepository.save(catalog);
+    Catalog catalog2 = new Catalog();
+    catalog2.setId(catalog.getId());
+    catalog2.setName("n");
+    var catalogList = new ArrayList<>();
+    validator.validate(catalog2).forEach(x -> catalogList.add(x));
+    catalogList.add("a");
+    assertTrue(catalogList.get(0).toString().contains("2 から 30 の間のサイズにしてください"));
+  }
 
 }
