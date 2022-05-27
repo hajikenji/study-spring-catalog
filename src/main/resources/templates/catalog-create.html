@@ -9,7 +9,10 @@
 <body>
   <p>新規作成画面</p>
   <form th:action="@{/catalog/catalog-create}" method="post" th:object="${catalog}">
+    <!-- JUnit検証用のタグ -->
     <span th:errors="*{name}" name="error"></span>
+    <!-- JUnit検証用のタグ -->
+    <span th:if="${#fields.hasErrors('name')}" name="nameErrorForJUnitTest"></span>
     <br>
     <input name="name" type="text" />
     <input type="submit" value="登録">

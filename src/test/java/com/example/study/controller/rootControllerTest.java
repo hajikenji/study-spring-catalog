@@ -78,7 +78,9 @@ public class rootControllerTest {
         // .andExpect(content().string(containsString("name")))
         .andExpect(model().hasErrors())
         .andExpect(content().string(containsString("新規作成画面")))
-        .andExpect(content().string(containsString("error")));
+        // html側に事前にth:errorのタグにname="error"など仕込んでおくと、エラッた時にしたのが反応する
+        .andExpect(content().string(containsString("error")))
+        .andExpect(content().string(containsString("nameErrorForJUnitTest")));
 
     // mockMvc.perform(
     // get("/catalog"))
@@ -86,6 +88,37 @@ public class rootControllerTest {
     // .andExpect(content().string(containsString("2 から 30 の間のサイズにしてください")));
     // .flashAttr("a", catalog);
     // .andExpect(view().name("catalog-create"));
+  }
+
+  @Test
+  @DisplayName("create後にdeleteできるか")
+  void catalogDelete() throws Exception {
+
+    Catalog catalog = new Catalog();
+    catalog.setName("name");
+
+    mockMvc.perform(
+        post("/catalog/catalog-create")
+            .flashAttr("catalog", catalog))
+        // .andExpect(content().string(containsString("name")))
+        .andExpect(redirectedUrl("/catalog"));
+    mockMvc.perform(
+        get("/catalog"))
+        .andExpect(content().string(containsString("name")));
+
+    // createの処理を行った後でgetIdをしないと取れない。
+    /// ↑のsetNameの所でgetIdしちゃうと保存処理の前なのでidが無いから
+    String forParam = Long.toString(catalog.getId());
+
+    mockMvc.perform(
+        post("/catalog/catalog-delete").param("id", forParam))
+        // post("/catalog/catalog-delete"))
+        .andExpect(content().string(containsString("deleteSuccess")));
+    // mockMvc.perform(
+    // get("/catalog")
+    // )
+    // .andExpect(matcher)
+
   }
 
 }

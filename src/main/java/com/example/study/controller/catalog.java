@@ -65,9 +65,13 @@ public class catalog {
   }
 
   // 削除処理
+  /// JUnit用に削除成功modelを作成し、redirectせず/catalogする
   @PostMapping("/catalog/catalog-delete")
-  public String catalogDelete(@RequestParam("id") long id) {
+  public String catalogDelete(@RequestParam("id") long id,
+      Model model,
+      @ModelAttribute Catalog catalog) {
     catalogRepository.deleteById(id);
-    return "redirect:/catalog";
+    model.addAttribute("forJunitTest", "deleteSuccess");
+    return "/catalog";
   }
 }
