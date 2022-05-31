@@ -71,7 +71,9 @@ public class catalog {
       Model model,
       @ModelAttribute Catalog catalog) {
     catalogRepository.deleteById(id);
-    model.addAttribute("forJunitTest", "deleteSuccess");
+    String stringId = Long.toString(id);
+    model.addAttribute("forJunitTest", stringId);
+    // model.addAttribute("", "deleteSuccess");
     return "/catalog";
   }
 }
