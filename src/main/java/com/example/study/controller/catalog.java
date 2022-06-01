@@ -74,6 +74,7 @@ public class catalog {
     String stringId = Long.toString(id);
     model.addAttribute("forJunitTest", stringId);
     // model.addAttribute("", "deleteSuccess");
+    catalogForSeeing(catalog, model);
     return "/catalog";
   }
 }
